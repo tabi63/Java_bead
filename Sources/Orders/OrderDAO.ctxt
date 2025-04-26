@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=OrderDAO
+comment1.params=order
+comment1.target=void\ insert(Order)
+comment2.params=order
+comment2.target=void\ update(Order)
+comment3.params=id
+comment3.target=void\ delete(int)
+comment4.params=
+comment4.target=java.util.List\ selectAll()
+comment5.params=id
+comment5.target=Order\ selectById(int)
+numComments=6
