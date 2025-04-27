@@ -21,8 +21,8 @@ CREATE TABLE "Orders".orderstate (
 
 CREATE TABLE "Orders"."order" (
 	id bigserial NOT NULL,
-	costumername varchar(100) NOT NULL,
-	costumeraddress varchar(1000) NOT NULL,
+	customername varchar(100) NOT NULL,
+	customeraddress varchar(1000) NOT NULL,
 	orderdate timestamp NOT NULL,
 	amount int4 NOT NULL,
 	orderstateid int4 NOT NULL,

@@ -21,7 +21,7 @@ CREATE TABLE "Orders".orderstate (
 
 CREATE TABLE "Orders"."order" (
 	id bigserial NOT NULL,
-	customerName varchar(100) NOT NULL,
+	customername varchar(100) NOT NULL,
 	customeraddress varchar(1000) NOT NULL,
 	orderdate timestamp NOT NULL,
 	amount int4 NOT NULL,
@@ -70,7 +70,3 @@ VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Received');
 INSERT INTO "Orders".orderstate
 (id, description)
 VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Deleted');
-
---INSERT INTO "Orders".order
---(id, customerName, customeraddress, orderdate, amount, orderstateid, createdon, createdby, lastmodifiedon, lastmodifiedby)
---VALUES(nextval('"Orders".order_id_seq'::regclass), 'Teszt Péter', 'Teszt falva', '2025-04-27', 5, 0, 'CURRENT_TIMESTAMP', 'Teszt Péter', '', '');

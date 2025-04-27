@@ -14,10 +14,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                     //Egyedi azonosító
 
-    @Column(name = "customerName") //Vevő neve
+    @Column(name = "customername") //Vevő neve
     private String customerName;
     
-    @Column(name = "customerAddress") //Vevő címe
+    @Column(name = "customeraddress") //Vevő címe
     private String customerAddress;
     
     @Column(name = "orderdate") //Megrendelés ideje
