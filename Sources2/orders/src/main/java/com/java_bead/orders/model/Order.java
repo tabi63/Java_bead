@@ -26,6 +26,7 @@ public class Order {
     @Column(name = "amount") //Fizetendő összeg
     private Integer amount;
     
+    // Many-to-One kapcsolat a rendelés állapotával
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderstateid", referencedColumnName = "id")
     private OrderState orderState; // Megrendelés állapota
@@ -42,6 +43,7 @@ public class Order {
     @Column(name = "lastmodifiedby") //Utolsó módosító
     private String lastModifiedBy;
 
+    // One-to-Many kapcsolat a rendelés tételeivel
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<OrderItem> orderItems; // Rendeles tételek listája
 
@@ -128,6 +130,7 @@ public class Order {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
+    // Kiszámolja  a rendelés összegét
     public void calculateAmount() {
         if (orderItems == null) {
             this.amount = 0;

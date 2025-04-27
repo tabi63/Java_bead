@@ -9,6 +9,7 @@ import com.java_bead.orders.model.Order;
 import com.java_bead.orders.service.OrderService;
 import com.java_bead.orders.service.OrderStateService;
 
+// Megrendelesek megjelenítése és kezelése
 @Controller
 @RequestMapping("/orders")
 public class OrderController {
@@ -19,12 +20,14 @@ public class OrderController {
     @Autowired
     private OrderStateService orderStateService;
 
+    // Megrendelések listázása
     @GetMapping
     public String listOrders(Model model) {
         model.addAttribute("orders", orderService.findAll());
         return "orders";
     }
 
+    // Megrendelések listázása keresési feltétel alapján
     @GetMapping(params = "query")
     public String searchOrders(@RequestParam String query, Model model) {
         model.addAttribute("orders", orderService.search(query));
@@ -32,12 +35,14 @@ public class OrderController {
         return "orders";
     }
     
+    // Megrendelés létrehozása
     @GetMapping("/create")
     public String addOrder(Model model) {
         model.addAttribute("order", new Order());
         return "edit-order";
     }
 
+    // Megrendelés szerkesztése
     @GetMapping("/edit/{id}")
     public String editOrder(@PathVariable Long id, Model model) {
         model.addAttribute("order", orderService.findById(id).orElse(new Order()));
@@ -45,12 +50,14 @@ public class OrderController {
         return "edit-order";
     }
 
+    // Megrendelés törlése
     @GetMapping("/delete/{id}")
     public String deleteOrder(@PathVariable Long id) {
         orderService.deleteById(id);
         return "redirect:/orders";
     }
 
+    // Megrendelés mentése
     @PostMapping("/save")
     public String saveOrder(@ModelAttribute Order order) {
         orderService.save(order);

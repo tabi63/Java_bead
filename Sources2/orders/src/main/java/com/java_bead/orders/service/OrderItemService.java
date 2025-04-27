@@ -12,12 +12,14 @@ import com.java_bead.orders.repository.OrderItemRepository;
 
 import jakarta.transaction.Transactional;
 
+// Rendelés tételek szolgáltatása
 @Service
 public class OrderItemService {
     
     @Autowired
     private OrderItemRepository orderItemRepository;
 
+    // Rendelés tételek frissítése rendelés alapján
     @Transactional
     public void updateOrderItems(Order order) {
         List<OrderItem> existingItems = orderItemRepository.findByOrderId(order.getId());
@@ -27,7 +29,7 @@ public class OrderItemService {
                 existingItem.getOrder().getOrderItems().remove(existingItem);
                 orderItemRepository.delete(existingItem);
             }
-            
+
             return;
         }
 

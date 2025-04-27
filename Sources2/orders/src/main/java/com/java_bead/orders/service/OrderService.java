@@ -12,6 +12,7 @@ import com.java_bead.orders.repository.OrderStateRepository;
 import java.util.List;
 import java.util.Optional;
 
+// Rendelés szolgáltatás
 @Service
 public class OrderService {
 
@@ -24,10 +25,12 @@ public class OrderService {
     @Autowired
     private OrderItemService orderItemService;
 
+    // Rendelések lekérdezése
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
+    // Rendelések lekérdezése query alapján
     public List<Order> search(String query) {
         return orderRepository.findAll()
                 .stream()
@@ -38,14 +41,18 @@ public class OrderService {
                 .toList();
     }
 
+    // Rendelés lekérdezése ID alapján
     public Optional<Order> findById(Long id) {
         return orderRepository.findById(id);
     }
 
+    // Rendelés törlése ID alapján
     public void deleteById(Long id) {
         orderRepository.deleteById(id);
     }
-
+    
+    // Rendelés mentése
+    // Ha az ID null, akkor új rendelést hoz létre, különben frissíti a rendelést
     public void save(Order order) {
         if (order.getId() == null) {
             addOrder(order);
@@ -54,6 +61,7 @@ public class OrderService {
         }
     }
 
+    // Rendelés létrehozása
     private void addOrder(Order order) {
         order.setCreatedBy("system");
         order.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
@@ -72,6 +80,7 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    // Rendelés frissítése
     private void updateOrderFields(Order order) {
         Order originalOrder = orderRepository.findById(order.getId())
             .orElseThrow(() -> new RuntimeException("Order not found with id " + order.getId()));

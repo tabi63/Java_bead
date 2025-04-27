@@ -11,6 +11,7 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;                 //megrendelés tételének egyedi azonosítója
 
+    // Many-to-One kapcsolat a rendelés tételével
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "orderid", referencedColumnName = "id", nullable = false)
     private Order order;            //megrendelés egyedi azonosítója
@@ -104,6 +105,7 @@ public class OrderItem {
     public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
+    // Teljes ár kiszámítása
     public Integer getTotalPrice() {
         return piece * unitPrice;
     }
