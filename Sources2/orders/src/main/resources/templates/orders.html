@@ -59,7 +59,6 @@
             color: #3498db;
         }
 
-        /* Button styles */
         button {
             background-color: #2980b9;
             color: white;
@@ -100,72 +99,75 @@
             background-color: #c0392b;
         }
 
-        .search-container {
-            text-align: center;
-            margin-top: 30px;
-        }
+.button-container {
+    width: 80%;
+    margin: 0 auto 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        .search-container input {
-            padding: 10px;
-            width: 300px;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
-        }
+.create-button-container {
+    text-align: center;
+}
 
-        .search-container button {
-            padding: 10px 15px;
-            border: 1px solid #2980b9;
-            background-color: #2980b9;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+.create-button-container button {
+    background-color: #2ecc71;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
 
-        .search-container button:hover {
-            background-color: #3498db;
-        }
+.create-button-container button:hover {
+    background-color: #27ae60;
+}
 
-        /* Button styles for Create Order */
-        .create-button-container {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+.search-container {
+    text-align: center;
+}
 
-        .create-button-container button {
-            background-color: #2ecc71;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+.search-container input {
+    padding: 10px;
+    width: 300px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 10px;
+}
 
-        .create-button-container button:hover {
-            background-color: #27ae60;
-        }
+.search-container button {
+    padding: 10px 15px;
+    border: 1px solid #2980b9;
+    background-color: #2980b9;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.search-container button:hover {
+    background-color: #3498db;
+}
     </style>
 </head>
 <body>
 
-    <h1>Order List</h1>
+    <h1>Rendelés lista</h1>
 
-    <!-- Create Order Button -->
-    <div class="create-button-container">
-        <a href="/orders/create">
-            <button>Create Order</button>
-        </a>
-    </div>
+    <div class="button-container">
+      <div class="search-container">
+          <form action="/orders" method="get">
+              <input type="text" name="query" placeholder="Search orders" th:value="${query}">
+              <button type="submit">Search</button>
+          </form>
+      </div>
+      <div class="create-button-container">
+          <a href="/orders/create">
+              <button>Create Order</button>
+          </a>
+      </div>
+  </div>
 
-    <!-- Search Form -->
-    <div class="search-container">
-        <form action="/orders" method="get">
-            <input type="text" name="query" placeholder="Search orders" th:value="${query}">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-
-    <!-- Order List Table -->
     <table>
         <tr>
             <th>ID</th>
@@ -175,7 +177,6 @@
             <th>Műveletek</th>
         </tr>
 
-        <!-- Loop through orders -->
         <tr th:each="order : ${orders}">
             <td th:text="${order.id}"></td>
             <td th:text="${order.customerName}"></td>
