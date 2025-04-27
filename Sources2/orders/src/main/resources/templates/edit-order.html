@@ -1,213 +1,207 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Order</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Order</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
 
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
+    h1 {
+      text-align: center;
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
 
-        form {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            max-width: 90%;
-            margin: 0 auto;
-        }
+    form {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 90%;
+      margin: 0 auto;
+    }
 
-        /* Left Column - Order Data */
-        .order-data {
-            flex: 1;
-            min-width: 300px;
-        }
+    .order-data {
+      flex: 1;
+      min-width: 300px;
+    }
 
-        /* Right Column - Order Items */
-        .order-items {
-            flex: 1;
-            min-width: 300px;
-        }
+    .order-items {
+      flex: 1;
+      min-width: 300px;
+    }
 
-        /* Styling Labels */
-        label {
-            font-weight: bold;
-            display: block;
-            margin-top: 10px;
-        }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 10px;
+    }
 
-        /* Input, Select, and Button Styles */
-        input, select, button {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
+    input,
+    select,
+    button {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
 
-        select {
-          width: 84%;
-        }
+    select {
+      width: 84%;
+    }
 
-        input{
-            width: 80%;
-        }
+    input {
+      width: 80%;
+    }
 
-        input[type="number"], input[type="text"], input[type="date"], select {
-            background-color: #f9f9f9;
-        }
+    input[type="number"],
+    input[type="text"],
+    input[type="date"],
+    select {
+      background-color: #f9f9f9;
+    }
 
-        input:disabled {
-            background-color: #e9e9e9;
-        }
+    input:disabled {
+      background-color: #e9e9e9;
+    }
 
-        button {
-            background-color: #2980b9;
-            color: white;
-            cursor: pointer;
-            border: none;
-        }
+    button {
+      background-color: #2980b9;
+      color: white;
+      cursor: pointer;
+      border: none;
+    }
 
-        button:hover {
-            background-color: #3498db;
-        }
+    button:hover {
+      background-color: #3498db;
+    }
 
-        /* Order Items Container */
-        .order-items-container {
-            margin-top: 20px;
-            height: calc(100vh - 300px);
-            overflow-y: auto;
-            /* border: 1px solid #ddd; */
-            padding: 10px;
-            /* background-color: #f9f9f9; */
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+    .order-items-container {
+      margin-top: 20px;
+      height: calc(100vh - 300px);
+      overflow-y: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        /* Order Item Styling */
-        .order-item {
-            background-color: #fff;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+    .order-item {
+      background-color: #fff;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
 
-        /* Input fields inside order item */
-        .order-item input {
-            width: 80%; /* Ensure the input fills the available width */
-            margin: 0; /* Remove margin to avoid extra space */
-        }
-        
-        .order-item label {
-            margin: 0; /* Remove margin to avoid extra space */
-        }
+    .order-item input {
+      width: 80%;
+      margin: 0;
+    }
 
+    .order-item label {
+      margin: 0;
+    }
 
-        /* Remove Button Styling */
-        .order-item button {
-            background-color: #e74c3c;
-            margin-top: 10px;
-            cursor: pointer;
-        }
+    .order-item button {
+      background-color: #e74c3c;
+      margin-top: 10px;
+      cursor: pointer;
+    }
 
-        .order-item button:hover {
-            background-color: #c0392b;
-        }
+    .order-item button:hover {
+      background-color: #c0392b;
+    }
 
-        /* Save Button - bottom left */
-        .actions-container {
-            margin-top: 20px;
-            text-align: left;
-            width: 100%;
-            display: flex;
-            justify-content: flex-start;
-        }
-    </style>
+    .actions-container {
+      margin-top: 20px;
+      text-align: left;
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+    }
+  </style>
 </head>
+
 <body>
 
-<form th:action="@{/orders/save}" method="post" th:object="${order}">
-    <input type="hidden" th:field="*{id}"/>
+  <form th:action="@{/orders/save}" method="post" th:object="${order}">
+    <input type="hidden" th:field="*{id}" />
 
-    <!-- Left Column - Order Data -->
     <div class="order-data">
-        <label>Vásárló neve:</label>
-        <input type="text" th:field="*{customerName}" required/><br/>
+      <label>Vásárló neve:</label>
+      <input type="text" th:field="*{customerName}" required /><br />
 
-        <label>Vásárló címe:</label>
-        <input type="text" th:field="*{customerAddress}" required/><br/>
+      <label>Vásárló címe:</label>
+      <input type="text" th:field="*{customerAddress}" required /><br />
 
-        <label>Rendelés dátuma:</label>
-        <input type="date" th:field="*{orderDate}" required/><br/>
+      <label>Rendelés dátuma:</label>
+      <input type="date" th:field="*{orderDate}" required /><br />
 
-        <label>Összege:</label>
-        <input type="number" th:field="*{amount}" disabled/><br/>
+      <label>Összege:</label>
+      <input type="number" th:field="*{amount}" disabled /><br />
 
-        <div th:if="${order.id != null}">
-            <label>Státusz:</label>
-            <select name="orderState.id" id="orderState">
-                <option th:each="state : ${orderStates}" 
-                        th:value="${state.id}" 
-                        th:text="${state.description}" 
-                        th:selected="${state.id == order.orderState?.id}">
-                </option>
-            </select>
-            <br/>
-        </div>
+      <div th:if="${order.id != null}">
+        <label>Státusz:</label>
+        <select name="orderState.id" id="orderState">
+          <option th:each="state : ${orderStates}" th:value="${state.id}" th:text="${state.description}"
+            th:selected="${state.id == order.orderState?.id}">
+          </option>
+        </select>
+        <br />
+      </div>
     </div>
 
     <div class="order-items">
-        <h2>Rendelési elemek</h2>
-        <div id="orderItems" class="order-items-container">
-            <div th:each="item, iterStat : *{orderItems}" data-index="__${iterStat.index}__" class="order-item">
-                <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].id}"/>
+      <h2>Rendelési elemek</h2>
+      <div id="orderItems" class="order-items-container">
+        <div th:each="item, iterStat : *{orderItems}" data-index="__${iterStat.index}__" class="order-item">
+          <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].id}" />
 
-                <label>Termék neve:</label>
-                <input type="text" th:field="*{orderItems[__${iterStat.index}__].productName}" required/>
+          <label>Termék neve:</label>
+          <input type="text" th:field="*{orderItems[__${iterStat.index}__].productName}" required />
 
-                <label>Darabszám:</label>
-                <input type="number" th:field="*{orderItems[__${iterStat.index}__].piece}" required onchange="updateAmount()"/>
+          <label>Darabszám:</label>
+          <input type="number" th:field="*{orderItems[__${iterStat.index}__].piece}" required
+            onchange="updateAmount()" />
 
-                <label>Egység ár:</label>
-                <input type="number" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" required onchange="updateAmount()"/>
+          <label>Egység ár:</label>
+          <input type="number" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" required
+            onchange="updateAmount()" />
 
-                <button type="button" onclick="removeItem(this)">Törlés</button>
-            </div>
+          <button type="button" onclick="removeItem(this)">Törlés</button>
         </div>
+      </div>
 
-        <button type="button" onclick="addItem()">Elem hozzáadása</button>
+      <button type="button" onclick="addItem()">Elem hozzáadása</button>
     </div>
 
     <div class="actions-container">
-        <button type="submit">Mentés</button>
+      <button type="submit">Mentés</button>
     </div>
-</form>
+  </form>
 
-<script>
+  <script>
     function addItem() {
-        const container = document.getElementById('orderItems');
-        const index = container.children.length;
-        const newItem = document.createElement('div');
+      const container = document.getElementById('orderItems');
+      const index = container.children.length;
+      const newItem = document.createElement('div');
 
-        newItem.innerHTML = `
+      newItem.innerHTML = `
             <div data-index="${index}" class="order-item">
                 <input type="hidden" name="orderItems[${index}].id" />
 
@@ -224,34 +218,35 @@
             </div>
         `;
 
-        container.appendChild(newItem);
+      container.appendChild(newItem);
     }
 
     function updateAmount() {
-        let amount = 0;
+      let amount = 0;
 
-        document.querySelectorAll('div[data-index]').forEach(function(itemDiv) {
-            const index = itemDiv.dataset.index;
+      document.querySelectorAll('div[data-index]').forEach(function (itemDiv) {
+        const index = itemDiv.dataset.index;
 
-            const pieceInput = itemDiv.querySelector('input[name$=".piece"]');
-            const unitPriceInput = itemDiv.querySelector('input[name$=".unitPrice"]');
+        const pieceInput = itemDiv.querySelector('input[name$=".piece"]');
+        const unitPriceInput = itemDiv.querySelector('input[name$=".unitPrice"]');
 
-            const piece = parseFloat(pieceInput.value);
-            const unitPrice = parseFloat(unitPriceInput.value);
+        const piece = parseFloat(pieceInput.value);
+        const unitPrice = parseFloat(unitPriceInput.value);
 
-            if (!isNaN(piece) && !isNaN(unitPrice)) {
-                amount += piece * unitPrice;
-            }
-        });
+        if (!isNaN(piece) && !isNaN(unitPrice)) {
+          amount += piece * unitPrice;
+        }
+      });
 
-        document.getElementById('amount').value = amount;
+      document.getElementById('amount').value = amount;
     }
 
     function removeItem(button) {
-        button.parentElement.remove();
-        updateAmount();
+      button.parentElement.remove();
+      updateAmount();
     }
-</script>
+  </script>
 
 </body>
+
 </html>

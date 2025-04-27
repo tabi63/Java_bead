@@ -1,193 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
-    <style>
-        body, h1, table {
-            margin: 0;
-            padding: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Orders</title>
+  <style>
+    body,
+    h1,
+    table {
+      margin: 0;
+      padding: 0;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
-            color: #333;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      color: #333;
+    }
 
-        h1 {
-            text-align: center;
-            margin-top: 20px;
-            color: #2c3e50;
-        }
+    h1 {
+      text-align: center;
+      margin-top: 20px;
+      color: #2c3e50;
+    }
 
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
+    table {
+      width: 80%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: #fff;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
 
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
+    th,
+    td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
 
-        th {
-            background-color: #2c3e50;
-            color: white;
-        }
+    th {
+      background-color: #2c3e50;
+      color: white;
+    }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
 
-        tr:hover {
-            background-color: #f1f1f1;
-        }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
 
-        a {
-            text-decoration: none;
-            color: #2980b9;
-            margin-right: 15px;
-        }
+    a {
+      text-decoration: none;
+      color: #2980b9;
+      margin-right: 15px;
+    }
 
-        a:hover {
-            color: #3498db;
-        }
+    a:hover {
+      color: #3498db;
+    }
 
-        button {
-            background-color: #2980b9;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
+    button {
+      background-color: #2980b9;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
 
-        button:hover {
-            background-color: #3498db;
-        }
+    button:hover {
+      background-color: #3498db;
+    }
 
-        .actions .edit {
-            margin-right: 10px;
-            padding: 5px 10px;
-            background-color: #3498db;
-            color: white;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
+    .actions .edit {
+      margin-right: 10px;
+      padding: 5px 10px;
+      background-color: #3498db;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
 
-        .actions .edit:hover {
-            background-color: #2980b9;
-        }
+    .actions .edit:hover {
+      background-color: #2980b9;
+    }
 
-        .actions .delete {
-            padding: 5px 10px;
-            background-color: #e74c3c;
-            color: white;
-            border-radius: 4px;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
+    .actions .delete {
+      padding: 5px 10px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background-color 0.3s;
+    }
 
-        .actions .delete:hover {
-            background-color: #c0392b;
-        }
+    .actions .delete:hover {
+      background-color: #c0392b;
+    }
 
-.button-container {
-    width: 80%;
-    margin: 0 auto 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .button-container {
+      width: 80%;
+      margin: 0 auto 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.create-button-container {
-    text-align: center;
-}
+    .create-button-container {
+      text-align: center;
+    }
 
-.create-button-container button {
-    background-color: #2ecc71;
-    color: white;
-    padding: 12px 25px;
-    border: none;
-    cursor: pointer;
-    border-radius: 4px;
-}
+    .create-button-container button {
+      background-color: #2ecc71;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
 
-.create-button-container button:hover {
-    background-color: #27ae60;
-}
+    .create-button-container button:hover {
+      background-color: #27ae60;
+    }
 
-.search-container {
-    text-align: center;
-}
+    .search-container {
+      text-align: center;
+    }
 
-.search-container input {
-    padding: 10px;
-    width: 300px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    margin-right: 10px;
-}
+    .search-container input {
+      padding: 10px;
+      width: 300px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
 
-.search-container button {
-    padding: 10px 15px;
-    border: 1px solid #2980b9;
-    background-color: #2980b9;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-}
+    .search-container button {
+      padding: 10px 15px;
+      border: 1px solid #2980b9;
+      background-color: #2980b9;
+      color: white;
+      border-radius: 4px;
+      cursor: pointer;
+    }
 
-.search-container button:hover {
-    background-color: #3498db;
-}
-    </style>
+    .search-container button:hover {
+      background-color: #3498db;
+    }
+  </style>
 </head>
+
 <body>
 
-    <h1>Rendelés lista</h1>
+  <h1>Rendelés lista</h1>
 
-    <div class="button-container">
-      <div class="search-container">
-          <form action="/orders" method="get">
-              <input type="text" name="query" placeholder="Keresés rendelésekben..." th:value="${query}">
-              <button type="submit">Keresés</button>
-          </form>
-      </div>
-      <div class="create-button-container">
-          <a href="/orders/create">
-              <button>Rendelés hozzáadása</button>
-          </a>
-      </div>
+  <div class="button-container">
+    <div class="search-container">
+      <form action="/orders" method="get">
+        <input type="text" name="query" placeholder="Keresés rendelésekben..." th:value="${query}">
+        <button type="submit">Keresés</button>
+      </form>
+    </div>
+    <div class="create-button-container">
+      <a href="/orders/create">
+        <button>Rendelés hozzáadása</button>
+      </a>
+    </div>
   </div>
 
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>Vevő neve</th>
-            <th>Megrendelés állapota</th>
-            <th>Összeg</th>
-            <th>Műveletek</th>
-        </tr>
+  <table>
+    <tr>
+      <th>ID</th>
+      <th>Vevő neve</th>
+      <th>Megrendelés állapota</th>
+      <th>Összeg</th>
+      <th>Műveletek</th>
+    </tr>
 
-        <tr th:each="order : ${orders}">
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.customerName}"></td>
-            <td th:text="${order.orderState.description}"></td>
-            <td th:text="${order.amount}"></td>
-            <td class="actions">
-                <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="edit">Edit</a>
-                <a th:href="@{/orders/delete/{id}(id=${order.id})}" class="delete">Delete</a>
-            </td>
-        </tr>
-    </table>
+    <tr th:each="order : ${orders}">
+      <td th:text="${order.id}"></td>
+      <td th:text="${order.customerName}"></td>
+      <td th:text="${order.orderState.description}"></td>
+      <td th:text="${order.amount}"></td>
+      <td class="actions">
+        <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="edit">Edit</a>
+        <a th:href="@{/orders/delete/{id}(id=${order.id})}" class="delete">Delete</a>
+      </td>
+    </tr>
+  </table>
 
 </body>
+
 </html>
