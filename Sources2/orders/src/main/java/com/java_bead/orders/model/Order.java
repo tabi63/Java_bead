@@ -42,13 +42,13 @@ public class Order {
     @Column(name = "lastmodifiedby") //Utolsó módosító
     private String lastModifiedBy;
 
-    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     private List<OrderItem> orderItems; // Rendeles tételek listája
 
     public Order() {}
 
     public Order(Long id, String customerName, String customerAddress, Date orderDate, Integer amount, OrderState orderState, Timestamp createdOn, String createdBy,
-        Timestamp lastModifiedOn, String lastModifiedBy) {
+        Timestamp lastModifiedOn, String lastModifiedBy, List<OrderItem> orderItems) {
         this.id = id;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
@@ -59,6 +59,7 @@ public class Order {
         this.createdBy = createdBy;
         this.lastModifiedOn = lastModifiedOn;
         this.lastModifiedBy =lastModifiedBy;
+        this.orderItems = orderItems;
     }
 
     public Long getId() {
@@ -120,5 +121,11 @@ public class Order {
     }
     public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
+    }
+    public List<OrderItem> getOrderItems() {
+        return orderItems;
+    }
+    public void setOrderItems(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 }

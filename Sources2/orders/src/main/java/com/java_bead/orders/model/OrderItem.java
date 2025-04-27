@@ -9,10 +9,10 @@ import jakarta.persistence.*;
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;                 //megrendelés tételének egyedi azonosítója
+    private Long id;                 //megrendelés tételének egyedi azonosítója
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "orderid", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "orderid", referencedColumnName = "id", nullable = false)
     private Order order;            //megrendelés egyedi azonosítója
 
     @Column(name = "productname")
@@ -38,7 +38,7 @@ public class OrderItem {
 
     public OrderItem() {}
 
-    public OrderItem(Integer id, Order order, String productName, Integer piece, Integer unitPrice, Timestamp createdOn, String createdBy, Timestamp lastmodifiedOn, String lastModifiedBy) {
+    public OrderItem(Long id, Order order, String productName, Integer piece, Integer unitPrice, Timestamp createdOn, String createdBy, Timestamp lastmodifiedOn, String lastModifiedBy) {
         this.id = id;
         this.order = order;
         this.productName = productName;
@@ -48,12 +48,12 @@ public class OrderItem {
         this.createdBy = createdBy;
         this.lastmodifiedOn = lastmodifiedOn;
         this.lastModifiedBy =lastModifiedBy;
-}
+    }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
     public Order getOrder() {

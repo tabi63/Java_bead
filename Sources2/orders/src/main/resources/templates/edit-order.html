@@ -26,10 +26,61 @@
     </select>
     <br/>
   </div>
- <!--  <label>Order State:</label>
-  <input type="text" th:field="*{orderState}" required/><br/> -->
+  
+  <h2>Order Items</h2>
+
+  <div id="orderItems">
+    <div th:each="item, iterStat : *{orderItems}">
+      <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].id}"/>
+      
+      <label>Product Name:</label>
+      <input type="text" th:field="*{orderItems[__${iterStat.index}__].productName}" required/>
+
+      <label>Piece:</label>
+      <input type="number" th:field="*{orderItems[__${iterStat.index}__].piece}" required/>
+
+      <label>Unit Price:</label>
+      <input type="number" step="0.01" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" required/>
+
+      <button type="button" onclick="removeItem(this)">Remove</button>
+      <br/><br/>
+    </div>
+  </div>
+
+  <button type="button" onclick="addItem()">Add Item</button>
+  <br/><br/>
+
 
   <button type="submit">Save</button>
 </form>
+
+<script>
+  function addItem() {
+      const container = document.getElementById('orderItems');
+      const index = container.children.length;
+      const newItem = document.createElement('div');
+  
+      newItem.innerHTML = `
+          <input type="hidden" name="orderItems[${index}].id" />
+          <label>Product Name:</label>
+          <input type="text" name="orderItems[${index}].productName" required/>
+  
+          <label>Piece:</label>
+          <input type="number" name="orderItems[${index}].piece" required/>
+  
+          <label>Unit Price:</label>
+          <input type="number" step="0.01" name="orderItems[${index}].unitPrice" required/>
+  
+          <button type="button" onclick="removeItem(this)">Remove</button>
+          <br/><br/>
+      `;
+  
+      container.appendChild(newItem);
+  }
+  
+  function removeItem(button) {
+      button.parentElement.remove();
+  }
+  </script>
 </body>
 </html>
