@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=OrderState
+comment1.params=
+comment1.target=OrderState()
+comment2.params=id\ description
+comment2.target=OrderState(int,\ java.lang.String)
+comment3.params=
+comment3.target=int\ getId()
+comment4.params=id
+comment4.target=void\ setId(int)
+comment5.params=
+comment5.target=java.lang.String\ getDescription()
+comment6.params=description
+comment6.target=void\ setDescription(java.lang.String)
+numComments=7

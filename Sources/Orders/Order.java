@@ -1,16 +1,17 @@
 import java.sql.Date;
 
+//Megrendelések osztálya
 public class Order {
-    private int id;
-    private String customerName;
-    private String customerAddress;
-    private Date orderDate;
-    private int amount;
-    private int orderStateId;
-    private Date createdOn;
-    private String createdBy;
-    private Date lastmodifiedOn;
-    private String lastModifiedBy;
+    private int id;                     //Egyedi azonosító
+    private String customerName;        //Vevő neve
+    private String customerAddress;     //Vevő címe
+    private Date orderDate;             //Megrendelés ideje
+    private int amount;                 //Fizetendő összeg 
+    private int orderStateId;           //Megrendelés állapota
+    private Date createdOn;             //Létrehozás ideje
+    private String createdBy;           //Létrehozó
+    private Date lastmodifiedOn;        //Utolsó módosítás ideje
+    private String lastModifiedBy;      //Utolső mődosító
     
 
     public Order() {}

@@ -1,15 +1,15 @@
 import java.sql.Date;
-
+//Megrendelés tételeinek az osztálya
 public class OrderItem {
-    private int id;
-    private int orderId;
-    private String productName;
-    private int piece;
-    private int unitPrice;
-    private Date createdOn;
-    private String createdBy;
-    private Date lastmodifiedOn;
-    private String lastModifiedBy;
+    private int id;                 //megrendelés tételének egyedi azonosítója
+    private int orderId;            //megrendelés egyedi azonosítója
+    private String productName;     //termék neve
+    private int piece;              //darabszám
+    private int unitPrice;          //egység ár
+    private Date createdOn;         //Létrehozás ideje
+    private String createdBy;       //Létrehozó
+    private Date lastmodifiedOn;    //Utolsó módosítás ideje
+    private String lastModifiedBy;  //Utolső mődosító
 
     public OrderItem() {}
 

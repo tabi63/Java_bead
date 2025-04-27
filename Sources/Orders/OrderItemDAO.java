@@ -2,8 +2,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//Megrendelés tételek kezelés az adatbázisban
 public class OrderItemDAO {
 
+    //Megrendelés tétel felvitele
     public void insert(OrderItem item) throws SQLException {
         String sql = "INSERT INTO orderitem (orderid, productname, piece, unitprice, createdon, createdby, lastmodifiedon, lastmodifiedby) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = Database.getConnection();
@@ -20,6 +22,7 @@ public class OrderItemDAO {
         }
     }
 
+    //Megrendelés tétel módosítása
     public void update(OrderItem item) throws SQLException {
         String sql = "UPDATE orderitem SET orderid = ?, productname = ?, quantity = ?, unitprice = ?, createdon = ?, createdby = ?, lastmodifiedon = ?, lastmodifiedby = ? WHERE id = ?";
         try (Connection conn = Database.getConnection();
@@ -37,6 +40,7 @@ public class OrderItemDAO {
         }
     }
 
+    //Megrendelés tétel törlése
     public void delete(int id) throws SQLException {
         String sql = "DELETE FROM orderitem WHERE id = ?";
         try (Connection conn = Database.getConnection();
@@ -46,6 +50,7 @@ public class OrderItemDAO {
         }
     }
 
+    //Összes megrendelés tétel lekérdezése
     public List<OrderItem> selectAll() throws SQLException {
         List<OrderItem> items = new ArrayList<>();
         String sql = "SELECT * FROM orderitem";
@@ -71,6 +76,34 @@ public class OrderItemDAO {
         return items;
     }
 
+    //Egy megrendeléshez tartozó tételek lekérdezése
+        public List<OrderItem> selectByOrderId(int orderId) throws SQLException {
+        List<OrderItem> items = new ArrayList<>();
+        String sql = "SELECT * FROM orderitem WHERE orderid = ?";
+        try (Connection conn = Database.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, orderId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    OrderItem item = new OrderItem(
+                        rs.getInt("id"),
+                        rs.getInt("orderid"),
+                        rs.getString("productname"),
+                        rs.getInt("piece"),
+                        rs.getInt("unitprice"),
+                        rs.getDate("createdon"),
+                        rs.getString("createdby"),
+                        rs.getDate("lastmodifiedon"),
+                        rs.getString("lastmodifiedby")
+                    );
+                    items.add(item);
+                }
+            }
+        }
+        return items;
+    }
+
+    //Megrendelés tétel lekérdezése id alapján
     public OrderItem selectById(int id) throws SQLException {
         String sql = "SELECT * FROM orderitem WHERE id = ?";
         try (Connection conn = Database.getConnection();
