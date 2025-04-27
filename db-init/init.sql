@@ -71,6 +71,6 @@ INSERT INTO "Orders".orderstate
 (id, description)
 VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Deleted');
 
-INSERT INTO "Orders".order
-(id, costumername, costumeraddress, orderdate, amount, orderstateid, createdon, createdby, lastmodifiedon, lastmodifiedby)
-VALUES(nextval('"Orders".order_id_seq'::regclass), 'Teszt Péter', 'Teszt falva', '2025-04-27', 5, 0, CURRENT_TIMESTAMP, 'Teszt Péter', '', '');
+--INSERT INTO "Orders".order
+--(id, customerName, customeraddress, orderdate, amount, orderstateid, createdon, createdby, lastmodifiedon, lastmodifiedby)
+--VALUES(nextval('"Orders".order_id_seq'::regclass), 'Teszt Péter', 'Teszt falva', '2025-04-27', 5, 0, 'CURRENT_TIMESTAMP', 'Teszt Péter', '', '');

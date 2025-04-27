@@ -1,6 +1,9 @@
 package com.java_bead.orders.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -23,34 +26,38 @@ public class Order {
     @Column(name = "amount") //Fizetendő összeg
     private Integer amount;
     
-    @Column(name = "orderstateid") //Megrendelés állapota
-    private Integer orderStateId;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderstateid", referencedColumnName = "id")
+    private OrderState orderState; // Megrendelés állapota
     
     @Column(name = "createdon") //Létrehozás ideje
-    private Date createdOn;
+    private Timestamp createdOn;
     
     @Column(name = "createdby") //Létrehozó
     private String createdBy;
     
     @Column(name = "lastmodifiedon") //Utolsó módosítás ideje
-    private Date lastmodifiedOn;
+    private Timestamp lastModifiedOn;
     
-    @Column(name = "lastmodifiedby") //Utolső mődosító
-    private String lastModifiedBy;    
+    @Column(name = "lastmodifiedby") //Utolsó módosító
+    private String lastModifiedBy;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OrderItem> orderItems; // Rendeles tételek listája
 
     public Order() {}
 
-    public Order(Long id, String customerName, String customerAddress, Date orderDate, Integer amount, Integer orderStateId, Date createdOn, String createdBy,
-                    Date lastmodifiedOn, String lastModifiedBy) {
+    public Order(Long id, String customerName, String customerAddress, Date orderDate, Integer amount, OrderState orderState, Timestamp createdOn, String createdBy,
+        Timestamp lastModifiedOn, String lastModifiedBy) {
         this.id = id;
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.orderDate = orderDate;
         this.amount = amount;
-        this.orderStateId = orderStateId;
+        this.orderState = orderState;
         this.createdOn = createdOn;
         this.createdBy = createdBy;
-        this.lastmodifiedOn = lastmodifiedOn;
+        this.lastModifiedOn = lastModifiedOn;
         this.lastModifiedBy =lastModifiedBy;
     }
 
@@ -84,16 +91,16 @@ public class Order {
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
-    public Integer getOrderStateId() {
-        return orderStateId;
+    public OrderState getOrderState() {
+        return orderState;
     }
-    public void setOrderStateId(Integer orderStateId) {
-        this.orderStateId = orderStateId;
+    public void setOrderState(OrderState orderState) {
+        this.orderState = orderState;
     }
-    public Date getCreatedOn() {
+    public Timestamp getCreatedOn() {
         return createdOn;
     }
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(Timestamp createdOn) {
         this.createdOn = createdOn;
     }
     public String getCreatedBy() {
@@ -102,11 +109,11 @@ public class Order {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
-    public Date getLastModifiedOn() {
-        return lastmodifiedOn;
+    public Timestamp getLastModifiedOn() {
+        return lastModifiedOn;
     }
-    public void setLastModifiedOn(Date lastmodifiedOn) {
-        this.lastmodifiedOn = lastmodifiedOn;
+    public void setLastModifiedOn(Timestamp lastModifiedOn) {
+        this.lastModifiedOn = lastModifiedOn;
     }
     public String getLastModifiedBy() {
         return lastModifiedBy;

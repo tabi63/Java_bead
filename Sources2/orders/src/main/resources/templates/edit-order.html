@@ -5,10 +5,30 @@
 <h1>Edit Order</h1>
 <form th:action="@{/orders/save}" method="post" th:object="${order}">
   <input type="hidden" th:field="*{id}"/>
-  <label>Description:</label>
-  <input type="text" th:field="*{description}" required/><br/>
-  <label>Status:</label>
-  <input type="text" th:field="*{status}" required/><br/>
+
+  <label>Customer Name:</label>
+  <input type="text" th:field="*{customerName}" required/><br/>
+  <label>Customer Address:</label>
+  <input type="text" th:field="*{customerAddress}" required/><br/>
+  <label>Order Date:</label>
+  <input type="date" th:field="*{orderDate}" required/><br/>
+  <label>Amount:</label>
+  <input type="number" th:field="*{amount}" step="0.01" required/><br/>
+
+  <div th:if="${order.id != null}">
+    <label>Status:</label>
+    <select name="orderState.id" id="orderState">
+      <option th:each="state : ${orderStates}" 
+              th:value="${state.id}" 
+              th:text="${state.description}" 
+              th:selected="${state.id == order.orderState?.id}">
+      </option>
+    </select>
+    <br/>
+  </div>
+ <!--  <label>Order State:</label>
+  <input type="text" th:field="*{orderState}" required/><br/> -->
+
   <button type="submit">Save</button>
 </form>
 </body>

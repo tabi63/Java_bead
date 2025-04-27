@@ -1,6 +1,7 @@
 package com.java_bead.orders.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
+
 import jakarta.persistence.*;
 
 @Entity
@@ -10,8 +11,9 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;                 //megrendelés tételének egyedi azonosítója
 
-    @Column(name = "orderid")
-    private Long orderId;            //megrendelés egyedi azonosítója
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "orderid", referencedColumnName = "id", insertable = false, updatable = false)
+    private Order order;            //megrendelés egyedi azonosítója
 
     @Column(name = "productname")
     private String productName;     //termék neve
@@ -23,22 +25,22 @@ public class OrderItem {
     private Integer unitPrice;          //egység ár
 
     @Column(name = "createdon")
-    private Date createdOn;         //Létrehozás ideje
+    private Timestamp createdOn;         //Létrehozás ideje
 
     @Column(name = "createdby")
     private String createdBy;       //Létrehozó
 
     @Column(name = "lastmodifiedon")
-    private Date lastmodifiedOn;    //Utolsó módosítás ideje
+    private Timestamp lastmodifiedOn;    //Utolsó módosítás ideje
 
     @Column(name = "lastmodifiedby")
-    private String lastModifiedBy;  //Utolső mődosító
+    private String lastModifiedBy;  //Utolsó módosító
 
     public OrderItem() {}
 
-    public OrderItem(Integer id, Long orderId, String productName, Integer piece, Integer unitPrice, Date createdOn, String createdBy, Date lastmodifiedOn, String lastModifiedBy) {
+    public OrderItem(Integer id, Order order, String productName, Integer piece, Integer unitPrice, Timestamp createdOn, String createdBy, Timestamp lastmodifiedOn, String lastModifiedBy) {
         this.id = id;
-        this.orderId = orderId;
+        this.order = order;
         this.productName = productName;
         this.piece = piece;
         this.unitPrice = unitPrice;
@@ -54,11 +56,11 @@ public class OrderItem {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Long getOrderId() {
-        return orderId;
+    public Order getOrder() {
+        return order;
     }
-    public void setOrderId(Long orderId) {
-        this.orderId = orderId;
+    public void setOrder(Order order) {
+        this.order = order;
     }
     public String getProductName() {
         return productName;
@@ -78,10 +80,10 @@ public class OrderItem {
     public void setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
     }
-    public Date getCreatedOn() {
+    public Timestamp getCreatedOn() {
         return createdOn;
     }
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(Timestamp createdOn) {
         this.createdOn = createdOn;
     }
     public String getCreatedBy() {
@@ -90,10 +92,10 @@ public class OrderItem {
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
-    public Date getLastModifiedOn() {
+    public Timestamp getLastModifiedOn() {
         return lastmodifiedOn;
     }
-    public void setLastModifiedOn(Date lastmodifiedOn) {
+    public void setLastModifiedOn(Timestamp lastmodifiedOn) {
         this.lastmodifiedOn = lastmodifiedOn;
     }
     public String getLastModifiedBy() {

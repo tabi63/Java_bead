@@ -4,13 +4,26 @@
 <body>
 <h1>Order List</h1>
 <table>
-  <tr><th>ID</th><th>Vevő neve</th><th>Megrendelés állapota</th><th>Actions</th></tr>
+  <div>
+    <a href="/orders/create">
+      <button>Create Order</button>
+    </a>
+  </div>
+  <div>
+    <form action="/orders" method="get">
+      <input type="text" name="query" placeholder="Search orders" th:value="${query}">
+      <button type="submit">Search</button>
+    </form>
+  </div>
+  <tr><th>ID</th><th>Vevő neve</th><th>Megrendelés állapota</th><th>Összeg</th><th>Actions</th></tr>
   <tr th:each="order : ${orders}">
     <td th:text="${order.id}"></td>
     <td th:text="${order.customerName}"></td>
-    <td th:text="${order.orderStateId}"></td>
+    <td th:text="${order.orderState.description}"></td>
+    <td th:text="${order.amount}"></td>
     <td>
       <a th:href="@{/orders/edit/{id}(id=${order.id})}">Edit</a>
+      <a th:href="@{/orders/delete/{id}(id=${order.id})}">Delete</a>
     </td>
   </tr>
 </table>
