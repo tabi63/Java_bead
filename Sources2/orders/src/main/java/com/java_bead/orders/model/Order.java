@@ -129,6 +129,11 @@ public class Order {
         this.orderItems = orderItems;
     }
     public void calculateAmount() {
+        if (orderItems == null) {
+            this.amount = 0;
+            return;
+        }
+
         this.amount = orderItems.stream()
             .filter(item -> item.getPiece() != null && item.getUnitPrice() != null)
             .mapToInt(item -> item.getPiece() * item.getUnitPrice())

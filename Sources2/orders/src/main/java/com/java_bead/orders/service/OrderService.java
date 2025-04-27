@@ -86,8 +86,6 @@ public class OrderService {
         originalOrder.setLastModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
         originalOrder.setOrderState(order.getOrderState());
 
-        ;
-
         orderRepository.save(originalOrder);
         orderItemService.updateOrderItems(order);
     }

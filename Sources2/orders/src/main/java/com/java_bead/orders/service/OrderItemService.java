@@ -22,6 +22,15 @@ public class OrderItemService {
     public void updateOrderItems(Order order) {
         List<OrderItem> existingItems = orderItemRepository.findByOrderId(order.getId());
 
+        if (order.getOrderItems() == null || order.getOrderItems().isEmpty()) {
+            for (OrderItem existingItem : existingItems) {
+                existingItem.getOrder().getOrderItems().remove(existingItem);
+                orderItemRepository.delete(existingItem);
+            }
+            
+            return;
+        }
+
         for (OrderItem existingItem : existingItems) {
             boolean stillExists = order.getOrderItems()
                 .stream()
