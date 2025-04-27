@@ -1,108 +1,202 @@
 <!DOCTYPE html>
-<html>
-<head><title>Edit Order</title></head>
-<body>
-<h1>Edit Order</h1>
-<form th:action="@{/orders/save}" method="post" th:object="${order}">
-  <input type="hidden" th:field="*{id}"/>
-
-  <label>Customer Name:</label>
-  <input type="text" th:field="*{customerName}" required/><br/>
-  <label>Customer Address:</label>
-  <input type="text" th:field="*{customerAddress}" required/><br/>
-  <label>Order Date:</label>
-  <input type="date" th:field="*{orderDate}" required/><br/>
-  <label>Amount:</label>
-  <input type="number" th:field="*{amount}" disabled/><br/>
-
-  <div th:if="${order.id != null}">
-    <label>Status:</label>
-    <select name="orderState.id" id="orderState">
-      <option th:each="state : ${orderStates}" 
-              th:value="${state.id}" 
-              th:text="${state.description}" 
-              th:selected="${state.id == order.orderState?.id}">
-      </option>
-    </select>
-    <br/>
-  </div>
-
-  <h2>Order Items</h2>
-
-  <div id="orderItems">
-    <div th:each="item, iterStat : *{orderItems}" data-index="__${iterStat.index}__">
-      <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].id}"/>
-      
-      <label>Product Name:</label>
-      <input type="text" th:field="*{orderItems[__${iterStat.index}__].productName}" required/>
-
-      <label>Piece:</label>
-      <input type="number" th:field="*{orderItems[__${iterStat.index}__].piece}" required onchange="updateGrandTotal()"/>
-
-      <label>Unit Price:</label>
-      <input type="number" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" required onchange="updateGrandTotal()"/>
-
-      <button type="button" onclick="removeItem(this)">Remove</button>
-      <br/><br/>
-    </div>
-  </div>
-
-  <button type="button" onclick="addItem()">Add Item</button>
-  <br/><br/>
-
-  <button type="submit">Save</button>
-</form>
-
-<script>
-  function addItem() {
-      const container = document.getElementById('orderItems');
-      const index = container.children.length;
-      const newItem = document.createElement('div');
-  
-      newItem.innerHTML = `
-        <div data-index="${index}">
-          <input type="hidden" name="orderItems[${index}].id" />
-          <label>Product Name:</label>
-          <input type="text" name="orderItems[${index}].productName" required/>
-  
-          <label>Piece:</label>
-          <input type="number" name="orderItems[${index}].piece" required onchange="updateGrandTotal()" />
-  
-          <label>Unit Price:</label>
-          <input type="number" name="orderItems[${index}].unitPrice" required onchange="updateGrandTotal()" />
-  
-          <button type="button" onclick="removeItem(this)">Remove</button>
-          <br/><br/>
-        </div>
-      `;
-  
-      container.appendChild(newItem);
-  }
-
-  function updateGrandTotal() {
-      let amount = 0;
-
-      document.querySelectorAll('div[data-index]').forEach(function(itemDiv) {
-        const index = itemDiv.dataset.index;
-
-        const pieceInput = itemDiv.querySelector('input[name$=".piece"]');
-        const unitPriceInput = itemDiv.querySelector('input[name$=".unitPrice"]');
-
-        const piece = parseFloat(pieceInput.value);
-        const unitPrice = parseFloat(unitPriceInput.value);
-
-        if (!isNaN(piece) && !isNaN(unitPrice)) {
-          amount += piece * unitPrice;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 20px;
         }
-      });
 
-      document.getElementById('amount').value = amount;
-  }
-  
-  function removeItem(button) {
-      button.parentElement.remove();
-      updateGrandTotal();
-  }
-</script>
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="number"], input[type="text"], input[type="date"], select {
+            background-color: #f9f9f9;
+        }
+
+        input:disabled {
+            background-color: #e9e9e9;
+        }
+
+        button {
+            background-color: #2980b9;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #3498db;
+        }
+
+        .order-items-container {
+            margin-top: 20px;
+        }
+
+        .order-item {
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .order-item input {
+            width: 30%;
+            margin-right: 10px;
+        }
+
+        .order-item button {
+            background-color: #e74c3c;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .order-item button:hover {
+            background-color: #c0392b;
+        }
+
+        .actions-container {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+
+    <h1>Edit Order</h1>
+    <form th:action="@{/orders/save}" method="post" th:object="${order}">
+        <input type="hidden" th:field="*{id}"/>
+
+        <label>Customer Name:</label>
+        <input type="text" th:field="*{customerName}" required/>
+
+        <label>Customer Address:</label>
+        <input type="text" th:field="*{customerAddress}" required/>
+
+        <label>Order Date:</label>
+        <input type="date" th:field="*{orderDate}" required/>
+
+        <label>Amount:</label>
+        <input type="number" th:field="*{amount}" disabled/>
+
+        <div th:if="${order.id != null}">
+            <label>Status:</label>
+            <select name="orderState.id" id="orderState">
+                <option th:each="state : ${orderStates}" 
+                        th:value="${state.id}" 
+                        th:text="${state.description}" 
+                        th:selected="${state.id == order.orderState?.id}">
+                </option>
+            </select>
+        </div>
+
+        <h2>Order Items</h2>
+
+        <div id="orderItems" class="order-items-container">
+            <div th:each="item, iterStat : *{orderItems}" data-index="__${iterStat.index}__" class="order-item">
+                <input type="hidden" th:field="*{orderItems[__${iterStat.index}__].id}"/>
+
+                <label>Product Name:</label>
+                <input type="text" th:field="*{orderItems[__${iterStat.index}__].productName}" required/>
+
+                <label>Piece:</label>
+                <input type="number" th:field="*{orderItems[__${iterStat.index}__].piece}" required onchange="updateGrandTotal()"/>
+
+                <label>Unit Price:</label>
+                <input type="number" th:field="*{orderItems[__${iterStat.index}__].unitPrice}" required onchange="updateGrandTotal()"/>
+
+                <button type="button" onclick="removeItem(this)">Remove</button>
+            </div>
+        </div>
+
+        <button type="button" onclick="addItem()">Add Item</button>
+
+        <div class="actions-container">
+            <button type="submit">Save</button>
+        </div>
+    </form>
+
+    <script>
+        function addItem() {
+            const container = document.getElementById('orderItems');
+            const index = container.children.length;
+            const newItem = document.createElement('div');
+
+            newItem.classList.add('order-item');
+            newItem.innerHTML = `
+                <div data-index="${index}">
+                    <input type="hidden" name="orderItems[${index}].id" />
+                    <label>Product Name:</label>
+                    <input type="text" name="orderItems[${index}].productName" required/>
+                    <label>Piece:</label>
+                    <input type="number" name="orderItems[${index}].piece" required onchange="updateGrandTotal()" />
+                    <label>Unit Price:</label>
+                    <input type="number" name="orderItems[${index}].unitPrice" required onchange="updateGrandTotal()" />
+                    <button type="button" onclick="removeItem(this)">Remove</button>
+                </div>
+            `;
+
+            container.appendChild(newItem);
+        }
+
+        function updateGrandTotal() {
+            let amount = 0;
+
+            document.querySelectorAll('div[data-index]').forEach(function(itemDiv) {
+                const index = itemDiv.dataset.index;
+
+                const pieceInput = itemDiv.querySelector('input[name$=".piece"]');
+                const unitPriceInput = itemDiv.querySelector('input[name$=".unitPrice"]');
+
+                const piece = parseFloat(pieceInput.value);
+                const unitPrice = parseFloat(unitPriceInput.value);
+
+                if (!isNaN(piece) && !isNaN(unitPrice)) {
+                    amount += piece * unitPrice;
+                }
+            });
+
+            document.getElementById('amount').value = amount;
+        }
+
+        function removeItem(button) {
+            button.parentElement.remove();
+            updateGrandTotal();
+        }
+    </script>
+
 </body>
 </html>
