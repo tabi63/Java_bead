@@ -12,3 +12,18 @@ java -version
 - Használj Visual Studio Code-ot fejlesztéshez.
     - Telepítsd a [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) bővítményt.
     - Telepítsd a [Spring Boot Extension Pack](https://marketplace.visualstudio.com/items/?itemName=vmware.vscode-boot-dev-pack) bővítményt.
+
+## Futtatás
+
+- Adatbázis magától létrejön emiatt: `- ./db-init:/docker-entrypoint-initdb.d`
+
+### Localhost
+
+- Docker telepítése 
+- postgres adatbázis futtatása docker-compose-ból
+- Web applikáció futtatása `Spring Boot Dashboard`-ból [URL](http://localhost:8080/orders)
+
+### Docker
+
+- Docker telepítése 
+- docker-compose futtatása [URL](http://localhost:8080/orders)
