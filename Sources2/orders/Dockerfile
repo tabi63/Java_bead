@@ -1,13 +1,32 @@
-# Use Maven and OpenJDK to build and run
-FROM maven:4.0.0-openjdk-21 AS build
-WORKDIR /app
-COPY pom.xml .
-RUN mvn dependency:go-offline
-COPY src /app/src
-RUN mvn package -DskipTests
+# Use the official Maven image to build the app
+FROM maven:3.9.8-eclipse-temurin-21 AS build
 
-FROM openjdk:21-jdk-slim
+# Set the working directory in the container
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Copy the pom.xml first and download the dependencies (this helps leverage Docker cache)
+COPY pom.xml /app
+
+# Copy the src directory after the pom.xml
+COPY src /app/src
+
+# Run Maven build to package the application
+RUN mvn clean install -U
+
+# Debug step: List the contents of /app/target
+RUN ls -la /app/target
+
+# Use an OpenJDK base image for running the app
+FROM openjdk:21
+
+# Copy the JAR file from the build stage to the new image
+COPY --from=build /app/target/orders-0.0.1-SNAPSHOT.jar /app/app.jar
+
+# Set the working directory in the new container
+WORKDIR /app
+
+# Expose port 8080
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "app.jar"]
+
+# Command to run the app
+CMD ["java", "-jar", "app.jar"]
