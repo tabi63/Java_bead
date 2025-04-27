@@ -104,4 +104,7 @@ public class OrderItem {
     public void setLastModifiedBy(String lastModifiedBy) {
         this.lastModifiedBy = lastModifiedBy;
     }
+    public Integer getTotalPrice() {
+        return piece * unitPrice;
+    }
 }

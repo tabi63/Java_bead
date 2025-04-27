@@ -67,6 +67,8 @@ public class OrderService {
             item.setCreatedOn(new java.sql.Timestamp(System.currentTimeMillis()));
         }
 
+        order.calculateAmount();
+
         orderRepository.save(order);
     }
 
@@ -74,6 +76,7 @@ public class OrderService {
         Order originalOrder = orderRepository.findById(order.getId())
             .orElseThrow(() -> new RuntimeException("Order not found with id " + order.getId()));
 
+        order.calculateAmount();
 
         originalOrder.setCustomerName(order.getCustomerName());
         originalOrder.setCustomerAddress(order.getCustomerAddress());
@@ -83,20 +86,9 @@ public class OrderService {
         originalOrder.setLastModifiedOn(new java.sql.Timestamp(System.currentTimeMillis()));
         originalOrder.setOrderState(order.getOrderState());
 
+        ;
+
         orderRepository.save(originalOrder);
-
-
-        /* orderRepository.updateOrderFields(
-                order.getId(),
-                order.getCustomerName(),
-                order.getCustomerAddress(),
-                order.getOrderDate(),
-                order.getAmount(),
-                order.getLastModifiedBy(),
-                order.getLastModifiedOn(),
-                order.getOrderState()
-        ); */
-
         orderItemService.updateOrderItems(order);
     }
 }

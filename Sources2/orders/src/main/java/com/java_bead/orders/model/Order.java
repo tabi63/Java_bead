@@ -128,4 +128,10 @@ public class Order {
     public void setOrderItems(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
+    public void calculateAmount() {
+        this.amount = orderItems.stream()
+            .filter(item -> item.getPiece() != null && item.getUnitPrice() != null)
+            .mapToInt(item -> item.getPiece() * item.getUnitPrice())
+            .sum();
+    }
 }
