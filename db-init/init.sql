@@ -54,3 +54,19 @@ CREATE TABLE "Orders".orderitem (
 	CONSTRAINT orderitem_pk PRIMARY KEY (id),
 	CONSTRAINT orderitem_order_fk FOREIGN KEY (orderid) REFERENCES "Orders"."order"(id)
 );
+
+INSERT INTO "Orders".orderstate
+(id, description)
+VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Ordered');
+INSERT INTO "Orders".orderstate
+(id, description)
+VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Paid');
+INSERT INTO "Orders".orderstate
+(id, description)
+VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'InTransit');
+INSERT INTO "Orders".orderstate
+(id, description)
+VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Received');
+INSERT INTO "Orders".orderstate
+(id, description)
+VALUES(nextval('"Orders".orderstate_id_seq'::regclass), 'Deleted');
