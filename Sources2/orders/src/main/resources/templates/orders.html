@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Orders</title>
+  <title>Java_Bead - Megrendelések</title>
   <style>
     body,
     h1,
@@ -179,7 +179,7 @@
       <th>Vevő neve</th>
       <th>Megrendelés állapota</th>
       <th>Összeg</th>
-      <th>Műveletek</th>
+      <th></th>
     </tr>
 
     <tr th:each="order : ${orders}">
@@ -188,8 +188,8 @@
       <td th:text="${order.orderState.description}"></td>
       <td th:text="${order.amount}"></td>
       <td class="actions">
-        <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="edit">Edit</a>
-        <a th:href="@{/orders/delete/{id}(id=${order.id})}" class="delete">Delete</a>
+        <a th:href="@{/orders/edit/{id}(id=${order.id})}" class="edit">Szerkesztés</a>
+        <a th:href="@{/orders/delete/{id}(id=${order.id})}" class="delete">Törlés</a>
       </td>
     </tr>
   </table>
